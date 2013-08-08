@@ -18,6 +18,7 @@ requires = [
     'Pygments',
     'Babel',
     'lingua',
+    'py-bcrypt',
     ]
 
 setup(name='paulla.paste',

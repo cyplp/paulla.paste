@@ -3,6 +3,8 @@ import datetime
 
 import couchdbkit
 
+import bcrypt
+
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 from pyramid.threadlocal import get_current_registry
@@ -43,26 +45,6 @@ def home(request):
     """
     return {'lexers': lexers()}
 
-def _buildPassword(username, createdTime, password):
-    """
-    Build sha1 of password.
-
-    :param username: username field of paste,
-    :param createdTime : datetime of creation the paste.
-    :param password: password to encrypt.
-
-    _buildPassword also use a salt defined in configuration file.
-    """
-    if not password:
-        return ''
-
-    tmp = ''.join((username, str(createdTime).split('.')[0], password, settings['salt']))
-
-    sha1 = hashlib.sha224()
-    sha1.update(tmp)
-
-    return sha1.hexdigest()
-
 @view_config(route_name='addContent', renderer='json')
 def add(request):
     """
@@ -86,7 +68,7 @@ def add(request):
             expireDate = now + delta
 
     if username:
-      password = _buildPassword(username, now, request.POST['password'])
+        password = bcrypt.hashpw(request.POST['password'], bcrypt.gensalt())
 
     paste = Paste(title=request.POST['title'],
                   content=request.POST['content'],
@@ -169,9 +151,7 @@ def update(request):
     """
     paste = Paste.get(request.matchdict['idContent'])
 
-    password = _buildPassword(paste.username, paste.created, request.POST['password'])
-
-    if password == paste.password:
+    if bcrypt.hashpw(request.POST['password'], paste.password) == paste.password:
         paste.title = request.POST['title']
         paste.content = request.POST['content']
 
@@ -214,12 +194,7 @@ def delete(request):
     """
     paste = Paste.get(request.matchdict['idContent'])
 
-    password = _buildPassword(paste.username,
-                              paste.created,
-                              request.POST['password'])
-
-    if password == paste.password:
-
+    if bcrypt.hashpw(request.POST['password'], paste.password) == paste.password:
         paste.delete()
 
         request.session.flash(u"Deleted") # TODO translatoion
