@@ -6,6 +6,7 @@ import bcrypt
 
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import HTTPNotFound
 from pyramid.threadlocal import get_current_registry
 from pyramid.events import NewRequest
 from pyramid.events import subscriber
@@ -88,7 +89,11 @@ def content(request):
     """
     Display a content Paste.
     """
-    paste = Paste.get(request.matchdict['idContent'])
+    try:
+        paste = Paste.get(request.matchdict['idContent'])
+    except couchdbkit.exceptions.ResourceNotFound:
+        raise HTTPNotFound()
+
     lexer = get_lexer_by_name(paste.typeContent, stripall=True)
 
     result = highlight(paste['content'], lexer, formatter)
