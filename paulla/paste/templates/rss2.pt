@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <rss version="2.0">
    <channel>
-      <title>Paulla Paste</title>
+      <title>${request.registry.settings.title}</title>
       <link>${request.route_url('home')}</link>
       <description>Paulla paste</description>
 

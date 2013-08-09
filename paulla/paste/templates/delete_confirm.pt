@@ -24,4 +24,6 @@
     </form>
 
   </div>
+
+    <title metal:fill-slot="title">${request.registry.settings.title} : ${paste.title}</title>
 </metal:main>

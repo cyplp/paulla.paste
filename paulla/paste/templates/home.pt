@@ -54,4 +54,7 @@
       </div>
     </form>
   </div>
+
+  <title metal:fill-slot="title">${request.registry.settings.title}</title>
+
 </metal:main>
