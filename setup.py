@@ -46,6 +46,8 @@ setup(name='paulla.paste',
       entry_points = """\
       [paste.app_factory]
       main = paulla.paste:main
+      [console_scripts]
+      purge = paulla.paste.purge:main
       """,
       message_extractors = { "paulla":
                              [
