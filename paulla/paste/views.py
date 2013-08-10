@@ -216,7 +216,24 @@ def rss2(request):
     """
     return {'pastes': previous()}
 
-from paulla.paste.xmlrpc import XmlRPC
-@view_config(name='xmlrpc')
-def xmlrpc(request):
-    return XmlRPC(request)()
+
+from pyramid_rpc.xmlrpc import xmlrpc_method
+
+@xmlrpc_method(method='pastes.newPaste', endpoint='api')
+def newPaste(request, pycon, content, args3, args4, args5, privacy):
+
+    now = datetime.datetime.now()
+
+    delta = expireChoice['1day']
+    expireDate = now + delta
+
+    paste = Paste(title='',
+                  content=content,
+                  created=now,
+                  typeContent='',
+                  username='',
+                  password='',
+                  expire=expireDate)
+    paste.save()
+
+    return paste._id

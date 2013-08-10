@@ -19,7 +19,7 @@ requires = [
     'Babel',
     'lingua',
     'py-bcrypt',
-    'pyramid_xmlrpc',
+    'pyramid_rpc',
     ]
 
 setup(name='paulla.paste',
