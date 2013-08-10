@@ -212,3 +212,9 @@ def rss2(request):
     Yeah we have rss !
     """
     return {'pastes': previous()}
+
+@view_config(context=HTTPNotFound, renderer='templates/404.pt')
+def notFound(resquest):
+    """
+    """
+    return {}
