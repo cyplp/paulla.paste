@@ -216,14 +216,18 @@ def rss2(request):
     return {'pastes': previous()}
 
 @xmlrpc_method(method='pastes.newPaste', endpoint='api')
-def newPaste(request, pycon, content, args3, args4, args5, privacy):
+def newPaste(request, language, content, parent_id, filename, mimetype, private):
     """
-    pycon contains 'pycon'
+    xmlprc methods for paste.
+
+    first usage in bpythpn :
+    language contains 'pycon'
     content containt the content to paste
+    private content true
+    others are empty.
 
-    privacy content true
-
-    others empty and no Idea about their usage.
+    signature found here :
+    http://dev.pocoo.org/hg/lodgeit-main/file/22a108f3aa85/lodgeit/lib/webapi.py#l64
     """
     now = datetime.datetime.now()
 
