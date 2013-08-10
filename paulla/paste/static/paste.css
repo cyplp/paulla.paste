@@ -1,0 +1,93 @@
+
+/* ---------------------------------------------------------------------- Cut to Paste */
+
+* { 
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box;         
+    }
+
+/* ---------------------------------------------------------------------- Layout */
+
+body { margin: 0; padding: 0 }
+
+nav { 
+	width: 200px; 
+	padding: 6rem 1em 1em 2em; 
+	float: left; 
+	background: url(cut.png) no-repeat .9em 0; 
+	}
+
+article {
+	padding:6rem 0 4em 250px
+	}
+
+
+/* ---------------------------------------------------------------------- Typesetting */
+
+html, body, button, input, select, textarea, pre, code { 
+	font-family: "Consolas", "Inconsolata", "Andale mono", monospace; 
+	font-size: 1em; 
+	line-height: 1.4 !important; 
+	color: #000
+	}
+
+	::-moz-selection, ::selection { background:#000; text-shadow:none; }
+
+ul, li { list-style-type: none; padding: 0; margin: 0}
+
+a:link { color:#000; text-decoration: none;}
+a:visited { color:#999;}
+a:focus, a:active, a:hover { text-decoration: underline;}
+
+nav { font-size: .75em; }
+.new { margin-bottom:1em; }
+
+h1 { margin-top: 0; letter-spacing: -0.08em; background: black; color: white}
+
+label, 
+h1, 
+.edit, 
+.delete,
+.new  { font-size: 1rem; padding: 0 0.5em; border-radius: .2em;  display: inline-block; font-weight: 700; }
+
+#author { font-weight: 400; color: #ddd; display: inline-block;}
+
+.new,
+.edit, 
+.delete { background: #ddd; color: black; text-decoration: none; }
+
+.new:hover,
+.edit:hover, 
+.delete:hover { background: black; color: white}
+
+form .row { overflow: auto; padding: 0 0 1em; }
+input, textarea, select { 
+	background: #eee;
+    border: none;
+    border-radius: 0.2em;
+    float: left;
+    font-size: 1em;
+    max-width: 600px;
+    min-height: 1.4em;
+    padding: 0 0.5em;
+    width: 100%;
+	}
+	select { padding-right: 0}
+
+label { 
+	background: #ddd;
+    color: white;
+    display: block;
+    float: left;
+    font-weight: 400;
+    margin-right: 1em;
+    vertical-align: top;
+    width: 10em;
+	}
+	input[type=submit] { width: auto; margin-left: 11em; cursor: pointer; background: black; color:white;}
+
+/* ---------------------------------------------------------------------- Source */
+pre { font-size: 0.875em}
+td.linenos { background-color: transparent !important; color: #ddd}
+
