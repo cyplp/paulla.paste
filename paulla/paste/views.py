@@ -89,10 +89,7 @@ def content(request):
     """
     Display a content Paste.
     """
-    try:
-        paste = Paste.get(request.matchdict['idContent'])
-    except couchdbkit.exceptions.ResourceNotFound:
-        raise HTTPNotFound()
+    paste = request.paste
 
     lexer = get_lexer_by_name(paste.typeContent, stripall=True)
 
@@ -106,7 +103,7 @@ def contentRaw(request):
     """
     Display a raw content paste.
     """
-    paste = Paste.get(request.matchdict['idContent'])
+    paste = request.paste
     # TODO type/mime
     return paste.content
 
@@ -140,7 +137,7 @@ def edit(request):
     """
     Edit a paste.
     """
-    paste = Paste.get(request.matchdict['idContent'])
+    paste = request.paste
 
     return {'lexers': lexers(),
             'paste': paste,}
@@ -153,7 +150,7 @@ def update(request):
     return to display if succed.
     return to edit if fail.
     """
-    paste = Paste.get(request.matchdict['idContent'])
+    paste = request.paste
 
     if bcrypt.hashpw(request.POST['password'], paste.password) == paste.password:
         paste.title = request.POST['title']
@@ -175,7 +172,7 @@ def deleteConfirm(request):
     """
     Ask confirmation on delete.
     """
-    paste = Paste.get(request.matchdict['idContent'])
+    paste = request.paste
 
     if not(paste.username and paste.password):
         return HTTPFound(request.route_path('oneContent', idContent=paste._id))
@@ -196,7 +193,7 @@ def delete(request):
     return to / if succed
     return to deleteConfigm is fail.
     """
-    paste = Paste.get(request.matchdict['idContent'])
+    paste = request.paste
 
     if bcrypt.hashpw(request.POST['password'], paste.password) == paste.password:
         paste.delete()
