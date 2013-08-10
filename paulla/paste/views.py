@@ -19,7 +19,7 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_all_lexers
 
 from paulla.paste.models import Paste
-
+from paulla.paste.paste_predicate import PastePredicate
 
 settings = get_current_registry().settings
 
@@ -84,7 +84,7 @@ def add(request):
     return HTTPFound(request.route_path('oneContent', idContent=paste._id))
 
 
-@view_config(route_name='oneContent', renderer='templates/content.pt')
+@view_config(route_name='oneContent', renderer='templates/content.pt', custom_predicates=(PastePredicate(),))
 def content(request):
     """
     Display a content Paste.
@@ -101,7 +101,7 @@ def content(request):
     return {'paste': paste,
             'content': result,}
 
-@view_config(route_name='oneContentRaw', renderer='string' )
+@view_config(route_name='oneContentRaw', renderer='string', custom_predicates=(PastePredicate(),))
 def contentRaw(request):
     """
     Display a raw content paste.
@@ -135,7 +135,7 @@ def previousEvent(event):
     """
     event.request.previous = previous()
 
-@view_config(route_name='edit', renderer='templates/edit.pt')
+@view_config(route_name='edit', renderer='templates/edit.pt', custom_predicates=(PastePredicate(),))
 def edit(request):
     """
     Edit a paste.
@@ -145,7 +145,7 @@ def edit(request):
     return {'lexers': lexers(),
             'paste': paste,}
 
-@view_config(route_name='update')
+@view_config(route_name='update', custom_predicates=(PastePredicate(),))
 def update(request):
     """
     Updating a paste.
@@ -170,7 +170,7 @@ def update(request):
     return HTTPFound(request.route_path('edit', idContent=paste._id))
 
 
-@view_config(route_name='deleteConfirm', renderer='templates/delete_confirm.pt')
+@view_config(route_name='deleteConfirm', renderer='templates/delete_confirm.pt', custom_predicates=(PastePredicate(),))
 def deleteConfirm(request):
     """
     Ask confirmation on delete.
@@ -188,7 +188,7 @@ def deleteConfirm(request):
             'content': result,}
 
 
-@view_config(route_name='delete')
+@view_config(route_name='delete', custom_predicates=(PastePredicate(),))
 def delete(request):
     """
     Delete a paste.

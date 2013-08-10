@@ -7,8 +7,6 @@ class PastePredicate(object):
     """
     Check and get Paste.
     """
-    def __init__(self, val, config):
-        pass
 
     def text(self):
            return 'predicat on paste'
