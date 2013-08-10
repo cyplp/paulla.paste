@@ -12,6 +12,12 @@ def main(global_config, **settings):
     set_cache_regions_from_settings(settings)
 
     config = Configurator(settings=settings)
+
+    config.include('pyramid_fanstatic')
+    config.include('pyramid_beaker')
+    config.include('rebecca.fanstatic')
+    config.include('pyramid_rpc.xmlrpc')
+
     config.set_session_factory(sessionFactory)
 
     get_current_registry().settings = settings
@@ -32,7 +38,6 @@ def main(global_config, **settings):
     config.add_fanstatic_resources([resource.strip() for resource in settings['resources'].split(',')]
                                    , r'.*\.pt')
 
-    config.include('pyramid_rpc.xmlrpc')
     config.add_xmlrpc_endpoint('api', '/api/xmlrpc')
 
     config.scan()
