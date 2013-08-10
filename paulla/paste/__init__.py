@@ -21,6 +21,7 @@ def main(global_config, **settings):
 
     config.add_route('home', '/')
     config.add_route('addContent', '/add')
+    config.add_route('xmlrpc', '/xmlrpc')
     config.add_route('oneContent', '/{idContent}')
     config.add_route('oneContentRaw', '/{idContent}/raw')
     config.add_route('update', '/{idContent}/update')
