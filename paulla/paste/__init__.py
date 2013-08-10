@@ -4,7 +4,7 @@ from pyramid_beaker import set_cache_regions_from_settings
 
 from pyramid.threadlocal import get_current_registry
 
-from paulla.paste.xmlrpc import XmlRPC
+#from paulla.paste.xmlrpc import XmlRPC
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -32,7 +32,7 @@ def main(global_config, **settings):
     config.add_route('rss2', '/feeds/rss2')
 
 
-    config.add_view(XmlRPC, name='xmlrpc')
+    #config.add_view(XmlRPC, name='xmlrpc')
 
 
     config.add_fanstatic_resources([resource.strip() for resource in settings['resources'].split(',')]

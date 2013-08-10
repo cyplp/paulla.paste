@@ -215,3 +215,8 @@ def rss2(request):
     Yeah we have rss !
     """
     return {'pastes': previous()}
+
+from paulla.paste.xmlrpc import XmlRPC
+@view_config(name='xmlrpc')
+def xmlrpc(request):
+    return XmlRPC(request)()
