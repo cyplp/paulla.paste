@@ -234,10 +234,13 @@ def newPaste(request, language, content, parent_id, filename, mimetype, private)
     delta = expireChoice['1day']
     expireDate = now + delta
 
+    if not mimetype:
+        mimetype = settings['default_mimetype']
+
     paste = Paste(title='',
                   content=content,
                   created=now,
-                  typeContent='text',
+                  typeContent=mimetype,
                   username='',
                   password='',
                   expire=expireDate)
