@@ -10,6 +10,7 @@
     <meta name="description" content="pyramid web application" />
     <link rel="shortcut icon" href="${request.static_url('paulla.paste:static/favicon.ico')}" />
     <link rel="alternate" href="${request.route_url('rss2')}" title="paulla.paste rss2" type="application/rss+xml" />
+    <link rel="shortcut icon" href="${request.static_url('paulla.paste:static/paste.css')}" />
   </head>
   <body>
     <div class="container-fluid">
@@ -23,22 +24,21 @@
     </div>
 
     <div class="row-fluid">
-      <div class="span3">
+      <nav class="span3">
 	<ul class="nav nav-tabs nav-stacked">
 	  <li tal:condition='request.path != "/"'>
-	    <a href="${request.route_path('home')}" i18n:translate=''>new</a>
+	    <a href="${request.route_path('home')}" i18n:translate='' class="new">new</a>
 	  </li>
 	  <li tal:repeat="current request.previous">
 	    <a href="${request.route_path('oneContent', idContent=current._id)}">${current.title} </a>
 	  </li>
-
 	</ul>
-      </div>
-      <div class="span9">
-	<div id="content" metal:define-slot="content">
+      </nav>
 
-	</div>
-      </div>
+      <article class="span9">
+	<div id="content" metal:define-slot="content"></div>
+      </article>
+
     </div>
 
   </body>

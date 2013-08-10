@@ -8,19 +8,19 @@
     <h1 i18n:translate=''>Add your content</h1>
     <form action="${request.route_path('addContent')}" method="POST">
       <div class="row">
-	<lablel class="span3" for="title" i18n:translate=''>
+	<label class="span3" for="title" i18n:translate=''>
 	  Title
 	</lablel>
 	<input type="text" id="title" name="title" />
       </div>
       <div class="row">
 	<label class="span3" for="content" i18n:translate=''>
-	  Content :
+	  Content
 	</label>
 	<textarea class="input-xxlarge" name='content' id='content' rows='25' placeholder="your paste here..."></textarea>
       </div>
       <div class="row">
-	<label class="span3" for="type" i18n:translate=''>type source</label>
+	<label class="span3" for="type" i18n:translate=''>Type</label>
 	<select class="span4" name="type" id='type'>
 	  <option tal:repeat="lexer lexers" value="${lexer[1]}">${lexer[0]}</option>
 	</select>
