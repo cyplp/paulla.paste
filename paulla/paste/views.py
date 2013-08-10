@@ -19,7 +19,7 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_all_lexers
 
 from paulla.paste.models import Paste
-
+from paulla.paste.paste_predicate import PastePredicate
 
 settings = get_current_registry().settings
 
@@ -84,15 +84,12 @@ def add(request):
     return HTTPFound(request.route_path('oneContent', idContent=paste._id))
 
 
-@view_config(route_name='oneContent', renderer='templates/content.pt')
+@view_config(route_name='oneContent', renderer='templates/content.pt', custom_predicates=(PastePredicate(),))
 def content(request):
     """
     Display a content Paste.
     """
-    try:
-        paste = Paste.get(request.matchdict['idContent'])
-    except couchdbkit.exceptions.ResourceNotFound:
-        raise HTTPNotFound()
+    paste = request.paste
 
     lexer = get_lexer_by_name(paste.typeContent, stripall=True)
 
@@ -101,12 +98,12 @@ def content(request):
     return {'paste': paste,
             'content': result,}
 
-@view_config(route_name='oneContentRaw', renderer='string' )
+@view_config(route_name='oneContentRaw', renderer='string', custom_predicates=(PastePredicate(),))
 def contentRaw(request):
     """
     Display a raw content paste.
     """
-    paste = Paste.get(request.matchdict['idContent'])
+    paste = request.paste
     # TODO type/mime
     return paste.content
 
@@ -135,17 +132,17 @@ def previousEvent(event):
     """
     event.request.previous = previous()
 
-@view_config(route_name='edit', renderer='templates/edit.pt')
+@view_config(route_name='edit', renderer='templates/edit.pt', custom_predicates=(PastePredicate(),))
 def edit(request):
     """
     Edit a paste.
     """
-    paste = Paste.get(request.matchdict['idContent'])
+    paste = request.paste
 
     return {'lexers': lexers(),
             'paste': paste,}
 
-@view_config(route_name='update')
+@view_config(route_name='update', custom_predicates=(PastePredicate(),))
 def update(request):
     """
     Updating a paste.
@@ -153,7 +150,7 @@ def update(request):
     return to display if succed.
     return to edit if fail.
     """
-    paste = Paste.get(request.matchdict['idContent'])
+    paste = request.paste
 
     if bcrypt.hashpw(request.POST['password'], paste.password) == paste.password:
         paste.title = request.POST['title']
@@ -170,12 +167,12 @@ def update(request):
     return HTTPFound(request.route_path('edit', idContent=paste._id))
 
 
-@view_config(route_name='deleteConfirm', renderer='templates/delete_confirm.pt')
+@view_config(route_name='deleteConfirm', renderer='templates/delete_confirm.pt', custom_predicates=(PastePredicate(),))
 def deleteConfirm(request):
     """
     Ask confirmation on delete.
     """
-    paste = Paste.get(request.matchdict['idContent'])
+    paste = request.paste
 
     if not(paste.username and paste.password):
         return HTTPFound(request.route_path('oneContent', idContent=paste._id))
@@ -188,7 +185,7 @@ def deleteConfirm(request):
             'content': result,}
 
 
-@view_config(route_name='delete')
+@view_config(route_name='delete', custom_predicates=(PastePredicate(),))
 def delete(request):
     """
     Delete a paste.
@@ -196,7 +193,7 @@ def delete(request):
     return to / if succed
     return to deleteConfigm is fail.
     """
-    paste = Paste.get(request.matchdict['idContent'])
+    paste = request.paste
 
     if bcrypt.hashpw(request.POST['password'], paste.password) == paste.password:
         paste.delete()
@@ -244,3 +241,9 @@ def newPaste(request, pycon, content, args3, args4, args5, privacy):
     paste.save()
 
     return paste._id
+
+@view_config(context=HTTPNotFound, renderer='templates/404.pt')
+def notFound(resquest):
+    """
+    """
+    return {}
