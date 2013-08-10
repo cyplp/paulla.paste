@@ -3,17 +3,19 @@
     xmlns:metal="http://xml.zope.org/namespaces/metal"
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     use-macro="load: layout.pt">
-  
-    <div metal:fill-slot="content" class="row">
-        <header>
-            <h1><span tal:condition="paste.username and paste.password" id='author'>${paste.username} / </span> ${paste.title}</h1>
-            <a class="edit" tal:condition="paste.username and paste.password" href="${request.route_path('edit', idContent=paste._id)}" i18n:translate='' title="Edit">&lt;/&gt;</a>
-            <a class="delete" tal:condition="paste.username and paste.password" href="${request.route_path('deleteConfirm', idContent=paste._id)}" i18n:translate='' title="Delete">x</a>
-        </header>
-        <div class="row">
-            ${structure: content}
-        </div>
-   </div>
+
+  <div metal:fill-slot="content" >
+    <header>
+      <h1><span tal:condition="paste.username and paste.password" id='author'>${paste.username} / </span> ${paste.title}</h1>
+      <div class="row">
+	<a class="edit span4" tal:condition="paste.username and paste.password" href="${request.route_path('edit', idContent=paste._id)}" i18n:translate='' title="Edit">Edit</a>
+	<a class="delete span4" tal:condition="paste.username and paste.password" href="${request.route_path('deleteConfirm', idContent=paste._id)}" i18n:translate='' title="Delete">Delete</a>
+      </div>
+    </header>
+    <div class="row">
+      ${structure: content}
+    </div>
+  </div>
 
   <title metal:fill-slot="title">${request.registry.settings.title} : ${paste.title}</title>
 </metal:main>
