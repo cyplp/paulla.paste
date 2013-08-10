@@ -24,7 +24,7 @@ def main(global_config, **settings):
     config.add_route('oneContentRaw', '/{idContent:\w{32}}/raw')
     config.add_route('update', '/{idContent:\w{32}}/update')
     config.add_route('edit', '/{idContent:\w{32}}/edit')
-    config.add_route('deleteConfirm', '/{idContent: \w{32}}/deleteConfirm')
+    config.add_route('deleteConfirm', '/{idContent:\w{32}}/deleteConfirm')
     config.add_route('delete', '/{idContent:\w{32}}/delete')
 
     config.add_route('rss2', '/feeds/rss2')
