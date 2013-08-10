@@ -18,6 +18,8 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_all_lexers
 
+from pyramid_rpc.xmlrpc import xmlrpc_method
+
 from paulla.paste.models import Paste
 from paulla.paste.paste_predicate import PastePredicate
 
@@ -212,9 +214,6 @@ def rss2(request):
     Yeah we have rss !
     """
     return {'pastes': previous()}
-
-
-from pyramid_rpc.xmlrpc import xmlrpc_method
 
 @xmlrpc_method(method='pastes.newPaste', endpoint='api')
 def newPaste(request, pycon, content, args3, args4, args5, privacy):
