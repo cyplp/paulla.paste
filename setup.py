@@ -40,6 +40,7 @@ setup(name='paulla.paste',
       include_package_data=True,
       namespace_packages=['paulla'],
       zip_safe=False,
+      license='beerware'
       install_requires=requires,
       tests_require=requires,
       test_suite="paullapaste",
