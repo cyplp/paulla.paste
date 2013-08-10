@@ -221,7 +221,14 @@ from pyramid_rpc.xmlrpc import xmlrpc_method
 
 @xmlrpc_method(method='pastes.newPaste', endpoint='api')
 def newPaste(request, pycon, content, args3, args4, args5, privacy):
+    """
+    pycon contains 'pycon'
+    content containt the content to paste
 
+    privacy content true
+
+    others empty and no Idea about their usage.
+    """
     now = datetime.datetime.now()
 
     delta = expireChoice['1day']
@@ -230,7 +237,7 @@ def newPaste(request, pycon, content, args3, args4, args5, privacy):
     paste = Paste(title='',
                   content=content,
                   created=now,
-                  typeContent='',
+                  typeContent='text',
                   username='',
                   password='',
                   expire=expireDate)
